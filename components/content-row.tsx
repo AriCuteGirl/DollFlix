@@ -52,7 +52,8 @@ function ContentCard({
   const [trailerKey, setTrailerKey] = useState<string | null>(null);
   const [cardRect, setCardRect] = useState<DOMRect | null>(null);
   const cardRef = useRef<HTMLElement>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const enterTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const leaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (!hovered || !item.tmdbId || trailerKey) return;
@@ -63,13 +64,22 @@ function ContentCard({
   }, [hovered, item.tmdbId, trailerKey]);
 
   function handleMouseEnter() {
+    if (leaveTimerRef.current) clearTimeout(leaveTimerRef.current);
     if (cardRef.current) setCardRect(cardRef.current.getBoundingClientRect());
-    timerRef.current = setTimeout(() => setHovered(true), 400);
+    enterTimerRef.current = setTimeout(() => setHovered(true), 400);
   }
 
   function handleMouseLeave() {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    setHovered(false);
+    if (enterTimerRef.current) clearTimeout(enterTimerRef.current);
+    leaveTimerRef.current = setTimeout(() => setHovered(false), 120);
+  }
+
+  function handleHoverCardEnter() {
+    if (leaveTimerRef.current) clearTimeout(leaveTimerRef.current);
+  }
+
+  function handleHoverCardLeave() {
+    leaveTimerRef.current = setTimeout(() => setHovered(false), 120);
   }
 
   function action(event: MouseEvent, callback: () => void) {
@@ -111,7 +121,8 @@ function ContentCard({
             item={item}
             trailerKey={trailerKey}
             cardRect={cardRect}
-            onMouseLeave={handleMouseLeave}
+            onMouseEnter={handleHoverCardEnter}
+            onMouseLeave={handleHoverCardLeave}
             onPlay={(e) => action(e, () => onPlay(item))}
             onDetails={(e) => action(e, () => onDetails(item))}
           />
@@ -125,6 +136,7 @@ function HoverCard({
   item,
   trailerKey,
   cardRect,
+  onMouseEnter,
   onMouseLeave,
   onPlay,
   onDetails,
@@ -132,6 +144,7 @@ function HoverCard({
   item: Title;
   trailerKey: string | null;
   cardRect: DOMRect;
+  onMouseEnter: () => void;
   onMouseLeave: () => void;
   onPlay: (e: MouseEvent) => void;
   onDetails: (e: MouseEvent) => void;
@@ -150,6 +163,7 @@ function HoverCard({
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.88, y: 10 }}
       transition={{ duration: 0.22, ease: "easeOut" }}
+      onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       style={{
         position: "fixed",
@@ -160,7 +174,6 @@ function HoverCard({
       }}
       className="pointer-events-auto overflow-hidden rounded-2xl border border-white/12 bg-[#0c0818] shadow-[0_32px_80px_rgba(0,0,0,.72)]"
     >
-      {/* Trailer or poster */}
       <div className="relative h-44 w-full overflow-hidden bg-black">
         {trailerKey ? (
           <iframe
@@ -179,7 +192,6 @@ function HoverCard({
         <div className="absolute inset-0 bg-gradient-to-t from-[#0c0818] via-transparent to-transparent" />
       </div>
 
-      {/* Info */}
       <div className="p-4 pt-2">
         <h3 className="text-base font-black leading-tight">{item.title}</h3>
         <div className="mt-2 flex flex-wrap gap-1.5 text-xs">
