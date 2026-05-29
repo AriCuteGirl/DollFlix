@@ -137,12 +137,7 @@ function HoverCard({
   onDetails: (e: MouseEvent) => void;
 }) {
   const expandedWidth = 320;
-  const scrollX = window.scrollX;
-  const scrollY = window.scrollY;
-
-  const centerX = cardRect.left + scrollX + cardRect.width / 2;
-  const top = cardRect.top + scrollY - 20;
-
+  const centerX = cardRect.left + cardRect.width / 2;
   let left = centerX - expandedWidth / 2;
   const viewportWidth = window.innerWidth;
   if (left < 16) left = 16;
@@ -157,8 +152,8 @@ function HoverCard({
       transition={{ duration: 0.22, ease: "easeOut" }}
       onMouseLeave={onMouseLeave}
       style={{
-        position: "absolute",
-        top,
+        position: "fixed",
+        top: cardRect.top - 20,
         left,
         width: expandedWidth,
         zIndex: 9999,
