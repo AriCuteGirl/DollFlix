@@ -177,8 +177,8 @@ function HoverCard({
       <div className="relative h-44 w-full overflow-hidden bg-black">
         {trailerKey ? (
           <iframe
-            className="absolute inset-0 h-full w-full border-0"
-            src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=1&controls=0&loop=1&playlist=${trailerKey}&playsinline=1&modestbranding=1`}
+            className="absolute inset-0 h-full w-full border-0 pointer-events-none"
+            src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=1&controls=0&loop=1&playlist=${trailerKey}&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&showinfo=0`}
             title={`${item.title} trailer`}
             allow="autoplay; encrypted-media"
           />
