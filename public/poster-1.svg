@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 760">
+  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#0b0618"/><stop offset=".45" stop-color="#5b24d8"/><stop offset="1" stop-color="#ff6fa8"/></linearGradient></defs>
+  <rect width="520" height="760" fill="url(#g)"/><circle cx="120" cy="120" r="150" fill="#3fdcff" opacity=".28"/><circle cx="430" cy="560" r="190" fill="#ff6fa8" opacity=".22"/><path d="M90 620 270 120l160 500Z" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="5"/><text x="42" y="690" fill="#fff" font-family="Arial" font-size="56" font-weight="800">NEON</text><text x="42" y="735" fill="#fff" font-family="Arial" font-size="44" font-weight="800">ORACLE</text>
+</svg>
