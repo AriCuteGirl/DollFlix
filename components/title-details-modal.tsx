@@ -100,7 +100,7 @@ export function TitleDetailsModal({
                         className="inline-flex min-h-12 items-center gap-3 rounded-full bg-white px-5 py-3 font-bold text-black transition hover:scale-[1.02] active:scale-95"
                       >
                         <Play className="h-5 w-5 fill-black" />
-                        Play Preview
+                        Play
                       </button>
                       <button className="inline-flex min-h-12 items-center gap-3 rounded-full border border-white/14 bg-white/8 px-5 py-3 font-bold backdrop-blur-xl transition hover:bg-white/14">
                         <Plus className="h-5 w-5" />
